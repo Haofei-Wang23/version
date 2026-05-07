@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Changmen Chronicles - Poster</title>
+    <!-- 引入 Tailwind CSS 进行快速排版 -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* 强制 A1 纸张尺寸和打印设置 */
+        @page {
+            size: A1 portrait; /* A1竖版: 594mm x 841mm */
+            margin: 0;
+        }
+        
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #0c0a09;
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+            color: #f5f5f4;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        /* ===== 海报主容器 ===== */
+        .a1-poster {
+            width: 594mm;
+            height: 841mm;
+            padding: 20mm 24mm 20mm 24mm; 
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            /* 关键逻辑重建：利用 space-between，只要保证是平行层级，所有大模块纵向间距将绝对、精准地一模一样 */
+            justify-content: space-between; 
+            background: linear-gradient(135deg, #0c0a09 0%, #1c1917 100%);
+            overflow: hidden !important; 
+        }
+
+        /* 统一模块盒子样式 */
+        .poster-box {
+            background-color: rgba(28, 25, 23, 0.7);
+            border-top: 4px solid #d97706; 
+            border-radius: 12px;
+            padding: 9mm; /* 稍微恢复一点内留白 */
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            border-left: 1px solid rgba(255,255,255,0.05);
+            border-right: 1px solid rgba(255,255,255,0.05);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .poster-box h2 {
+            font-size: 26px; 
+            font-weight: 700;
+            color: #fbbf24;
+            margin-bottom: 12px;
+            margin-top: 0;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .poster-box h3 {
+            font-size: 19px; 
+            font-weight: 700;
+            color: #fcd34d;
+            margin-top: 14px;
+            margin-bottom: 6px;
+        }
+
+        .poster-box p, .poster-box li {
+            font-size: 16.5px;  
+            line-height: 1.55; 
+            color: #d6d3d1; 
+            margin-bottom: 8px;
+            margin-top: 0;
+        }
+        
+        .poster-box ul {
+            list-style-type: disc;
+            padding-left: 18px;
+            margin-top: 0;
+            margin-bottom: 8px;
+        }
+
+        /* 表格样式 */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 15.5px; 
+            margin-top: 8px;
+            margin-bottom: 8px;
+        }
+        th, td {
+            text-align: left;
+            padding: 6px 8px; 
+            border-bottom: 1px solid #444;
+        }
+        th { color: #fcd34d; }
+
+        .highlight { color: #fbbf24; font-weight: bold; }
+
+        /* 网格组 */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12mm; /* 只有水平间距 */
+        }
+
+        /* 标签流 */
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 4px;
+        }
+        .tag {
+            background-color: #78350f;
+            color: #fde68a;
+            padding: 5px 12px;
+            border-radius: 6px;
+            font-size: 14.5px; 
+            font-weight: bold;
+        }
+
+        /* 原型图 1行4个 横向排布 */
+        .image-row-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            width: 100%;
+            margin-top: 14px;
+        }
+
+        .image-wrapper {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+
+        .image-wrapper img {
+            width: 100%;
+            /* 16:9：略微压低高度，为顶部巨幅标题留出充沛空间 */
+            aspect-ratio: 16 / 9; 
+            object-fit: cover;
+            object-position: center top; 
+            border-radius: 6px;
+            border: 2px solid #555;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+        }
+
+        .image-caption {
+            text-align: center;
+            margin-top: 10px !important;
+            font-size: 14px !important; 
+            margin-bottom: 0 !important;
+            color: #a8a29e !important;
+        }
+        
+        /* 流程图样式 */
+        .journey-flow {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            background: rgba(0,0,0,0.2);
+            padding: 16px; 
+            border-radius: 8px;
+            margin-top: 8px;
+        }
+        .journey-step {
+            flex: 1;
+            text-align: center;
+            position: relative;
+            padding: 0 10px;
+        }
+        .journey-step:not(:last-child)::after {
+            content: "➔";
+            position: absolute;
+            right: -10px;
+            top: 24px; 
+            color: #d97706;
+            font-size: 22px;
+        }
+        .step-num {
+            display: inline-block;
+            width: 32px;
+            height: 32px;
+            line-height: 32px;
+            background: #9d2449; 
+            color: white;
+            border-radius: 50%;
+            font-weight: bold;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        .step-title {
+            font-weight: bold;
+            color: #fbbf24;
+            font-size: 17px;
+            display: block;
+            margin-bottom: 6px;
+        }
+        .step-desc {
+            font-size: 14px;
+            color: #d6d3d1;
+            line-height: 1.45;
+        }
+    </style>
+</head>
+<body>
+
+<div class="a1-poster">
+    
+    <!-- ==============================================
+         第一大组件： 头区 (大幅拆分三行距离) 
+    =============================================== -->
+    <div style="text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+        <h1 style="font-size: 58px; font-weight: 800; color: #f5f5f4; margin-top: 0; margin-bottom: 34px; letter-spacing: 2px;">
+            Changmen Chronicles
+        </h1>
+        <p style="font-size: 25px; color: #fbbf24; margin-top: 0; margin-bottom: 40px; font-weight: 600;">
+            阊门繁华录 — An Interactive Digital Heritage Experience Through 2,500 Years of Suzhou History
+        </p>
+        <div style="background-color: #78350f; padding: 12px 36px; border-radius: 50px; font-size: 17px; color: #fef3c7; line-height: 1.6; box-shadow: 0 4px 15px rgba(0,0,0,0.4);">
+            <strong>XJTLU Group A1-3</strong> | CPT208 Human-Centric Computing <br>
+            Project Members: Xingquan.Hou (2364009), Zhixiang.Wu (2361297), Haonan.Cheng (2360081), Haofei.Wang (2364082)
+        </div>
+    </div>
+
+    <!-- ==============================================
+         第二大组件： Abstract
+    =============================================== -->
+    <div class="poster-box">
+        <h2>Abstract</h2>
+        <p style="font-size: 17.5px; line-height: 1.6;">
+            <em>Changmen Chronicles (阊门繁华录)</em> is an interactive web experience bringing to life the 2,500-year history of Suzhou's Changmen Gate, celebrated in <em>Dream of the Red Chamber</em> as "the foremost prosperous place in the mortal world." Targeting cultural enthusiasts, students, and international tourists, our platform addresses a critical gap: traditional digital heritage presentations remain static and fail to emotionally engage audiences aged 18-35.
+        </p>
+        <p style="margin-bottom: 0; font-size: 17.5px; line-height: 1.6;">
+            By combining immersive visual storytelling with human-centered design, we transform historical data into a cohesive narrative journey featuring an interactive timeline, annotated ancient map with clickable hotspots, biographical profiles of Wu Zixu, Tang Yin, and Cao Xueqin, and a visual gallery — all in bilingual Chinese-English format.
+        </p>
+    </div>
+
+    <!-- ==============================================
+         第三大组件： Domain & Solutions (双列同层)
+    =============================================== -->
+    <div class="grid-2">
+        <!-- Left: Problem Domain -->
+        <div class="poster-box">
+            <h2>1. Problem Domain</h2>
+            <h3>Motivation</h3>
+            <p>Changmen, the western gate of ancient Suzhou, dates to 514 BC when King Helu of Wu commissioned Wu Zixu to build the city. One of eight gates facing Chu (Po Chu Men), it served as a military fortress and economic lifeline for over two millennia. During the Ming and Qing dynasties, the Grand Canal made it one of the world's most vibrant commercial hubs. Yet the 1860 Gengshen Calamity devastated the area, and most digital presentations fail to communicate this heritage.</p>
+            
+            <h3>Gaps in Existing Solutions</h3>
+            <ul>
+                <li><span class="highlight">Static presentations:</span> Text-heavy articles lack interactive engagement.</li>
+                <li><span class="highlight">Fragmented information:</span> Data scattered across papers, chronicles, and tourism sites.</li>
+                <li><span class="highlight">No cohesive storytelling:</span> No integrated 2,500-year narrative journey exists.</li>
+                <li><span class="highlight">Language & Device barriers:</span> Chinese-only resources exclude international audiences, and sites are not optimized for mobile-first browsing.</li>
+            </ul>
+
+            <!-- Target User Personas -->
+            <h3>Target User Personas</h3>
+            <div style="display: flex; gap: 12px; margin-top: 5px;">
+                <div style="flex: 1; background: rgba(0,0,0,0.3); padding: 14px; border-radius: 8px; border-top: 3px solid #9d2449;">
+                    <strong style="color: #fbbf24; font-size: 16.5px;">Primary Users</strong><br>
+                    <span style="font-size: 15px;">Cultural enthusiasts, students, young professionals (18-35) seeking immersive exploration.</span>
+                </div>
+                <div style="flex: 1; background: rgba(0,0,0,0.3); padding: 14px; border-radius: 8px; border-top: 3px solid #5b21b6;">
+                    <strong style="color: #fbbf24; font-size: 16.5px;">Secondary Users</strong><br>
+                    <span style="font-size: 15px;">International tourists, educators, overseas Chinese reconnecting with heritage.</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right: Design Solution -->
+        <div class="poster-box">
+            <h2>2. Design Solution</h2>
+            <h3>Goals & Objectives</h3>
+            <ul>
+                <li>Create an immersive HCD heritage experience transforming passive consumption into active exploration.</li>
+                <li>Present 2,500 years of Changmen history as a cohesive, interactive narrative.</li>
+                <li>Bridge cultural gaps through bilingual Chinese-English storytelling.</li>
+                <li>Demonstrate HCD principles for cultural heritage education.</li>
+            </ul>
+
+            <h3>Innovation & HCD Principles</h3>
+            <p>Grounded in the Interaction Design Lifecycle Model (Sharp et al., 2019), built on three pillars:</p>
+            <ul>
+                <li><span class="highlight">Immersion:</span> Parallax scrolling and cinematic dark visuals create a museum-at-night atmosphere.</li>
+                <li><span class="highlight">Interactivity:</span> Clickable map hotspots and animated timeline encourage active discovery.</li>
+                <li><span class="highlight">Accessibility:</span> Bilingual content, responsive layout, and clear typography welcome all audiences.</li>
+            </ul>
+
+            <h3>Core Features</h3>
+            <div class="tags" style="margin-bottom: 0;">
+                <span class="tag">Parallax Scrolling</span>
+                <span class="tag">Interactive Timeline</span>
+                <span class="tag">Clickable Map</span>
+                <span class="tag">Bilingual</span>
+                <span class="tag">Responsive</span>
+                <span class="tag">Figure Profiles</span>
+                <span class="tag">Visual Gallery</span>
+                <span class="tag">Dark Cinematic Theme</span>
+                <span class="tag">React</span>
+                <span class="tag">SVG</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==============================================
+         第四大组件： User Journey Map
+    =============================================== -->
+    <div class="poster-box">
+        <h2>3. User Journey Map</h2>
+        <div class="journey-flow">
+            <div class="journey-step">
+                <span class="step-num">1</span>
+                <span class="step-title">Discover</span>
+                <p class="step-desc">Lands on hero page with aerial Changmen view and golden calligraphy title.</p>
+            </div>
+            <div class="journey-step">
+                <span class="step-num">2</span>
+                <span class="step-title">Explore</span>
+                <p class="step-desc">Scrolls timeline from 514 BC through Ming-Qing era to present day.</p>
+            </div>
+            <div class="journey-step">
+                <span class="step-num">3</span>
+                <span class="step-title">Interact</span>
+                <p class="step-desc">Clicks map hotspots to unlock landmark stories and historical context.</p>
+            </div>
+            <div class="journey-step">
+                <span class="step-num">4</span>
+                <span class="step-title">Connect</span>
+                <p class="step-desc">Reads biographies of Wu Zixu, Tang Yin, Cao Xueqin, forming bonds.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==============================================
+         第五大组件： Prototypes & Images
+    =============================================== -->
+    <div class="poster-box" style="padding-bottom: 3mm;">
+        <h2 style="margin-bottom: 8px;">4. Prototypes & Iterations</h2>
+        <p style="margin-bottom: 6px;">
+            Three iterations following the interaction design lifecycle: 
+            <span class="highlight" style="font-size: 15px; margin-left: 10px;">1. Paper Wireframe (Low-fi sketches with 5 users) ➔ 2. Figma Mockup (High-fi dark system) ➔ 3. Web Prototype (React app with parallax).</span>
+        </p>
+        
+        <div class="image-row-container">
+            <div class="image-wrapper">
+                <img src="./public/1.png" alt="Fig 1. Hero: Aerial Changmen">
+                <p class="image-caption">Fig 1. Hero: Aerial Changmen</p>
+            </div>
+            <div class="image-wrapper">
+                <img src="./public/2.png" alt="Fig 2. Interactive Timeline">
+                <p class="image-caption">Fig 2. Interactive Timeline</p>
+            </div>
+            <div class="image-wrapper">
+                <img src="./public/3.png" alt="Fig 3. Ancient City Map">
+                <p class="image-caption">Fig 3. Ancient City Map</p>
+            </div>
+            <div class="image-wrapper">
+                <img src="./public/4.png" alt="Fig 4. Historical Figures">
+                <p class="image-caption">Fig 4. Historical Figures</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==============================================
+         第六大组件： Evaluation & References (双列同层)
+    =============================================== -->
+    <div class="grid-2">
+        
+        <!-- Left: Evaluation -->
+        <div class="poster-box">
+            <h2>5. Early Evaluation & Impact</h2>
+            <h3>User Evaluation (n=12)</h3>
+            <ul style="margin-bottom: 12px;">
+                <li><span class="highlight">87.5%</span> found timeline "engaging and informative."</li>
+                <li><span class="highlight">75%</span> preferred dark theme for cultural heritage.</li>
+                <li><span class="highlight">91.7%</span> said bilingual text improved accessibility.</li>
+                <li><strong>Top request:</strong> Ambient audio with guqin music.</li>
+                <li><strong>Avg. session:</strong> 8.5 min (vs. 2-3 min typical).</li>
+            </ul>
+            
+            <div style="border-left: 4px solid #fbbf24; padding-left: 14px; margin: 16px 0; font-style: italic; color: #fbbf24; font-size: 16px; background: rgba(0,0,0,0.2); padding-top:12px; padding-bottom:12px;">
+                "最是红尘中一二等富贵风流之地" <br>
+                <span style="font-size: 14px; color: #aaa;">— Cao Xueqin, Dream of the Red Chamber</span>
+            </div>
+
+            <h3>Significance</h3>
+            <p style="margin-bottom: 0;">Digital storytelling transforms passive cultural consumption into active exploration. This HCD approach offers a replicable model for UNESCO heritage sites. Future work: ambient audio, AR map integration.</p>
+        </div>
+
+        <!-- Right: References & Decisions -->
+        <div class="poster-box">
+            <h2>6. References & Acknowledgments</h2>
+            <h3>Key Design Decision</h3>
+            <p style="margin-top:0; margin-bottom: 8px; font-size:15px;"><strong>Q: Dark immersive theme vs. light academic layout?</strong></p>
+            <table>
+                <tr>
+                    <th>Option</th>
+                    <th>Strengths</th>
+                    <th>Weaknesses</th>
+                </tr>
+                <tr>
+                    <td><strong>A. Dark Theme</strong></td>
+                    <td style="color:#a3e635">Cinematic; gold accents echo imperial aesthetics</td>
+                    <td style="color:#f87171">Print unfriendly</td>
+                </tr>
+                <tr>
+                    <td>B. Light Academic</td>
+                    <td>Readable, conventional</td>
+                    <td>Less engaging</td>
+                </tr>
+                <tr>
+                    <td>C. Hybrid</td>
+                    <td>Balances both</td>
+                    <td>Complex, inconsistent</td>
+                </tr>
+            </table>
+            <p style="margin-top: 8px; font-size: 15px; margin-bottom: 14px;"><em>Selected Option A:</em> Target audience (18-35) prioritized emotional engagement. Dark background evokes a museum at night.</p>
+
+            <h3>Academic References</h3>
+            <ul style="font-size: 14.5px; color: #a8a29e; line-height: 1.5; padding-left: 15px; margin-bottom: 0;">
+                <li>[1] Sharp, H., Preece, J., & Rogers, Y. (2019). Interaction Design (5th ed.). Wiley.</li>
+                <li>[2] Shan, J. (2006). Large-Scale Lineal Cultural Heritages. <em>Relics from South</em>, (03), 2-5.</li>
+                <li>[3] Ye, F. (2017). Tourism and World Cultural Heritage. <em>J. Wuyi Univ.</em>, 36(11), 33-37.</li>
+                <li>[4] Xu, S. (2008). Heritage Authenticity and Heritage Tourism. <em>Tourism Tribune</em>, (04), 35-42.</li>
+                <li>[5] Jinchang Local Chronicles Commission. (2005). <em>Annals of Jinchang District</em>. Southeast Univ. Press.</li>
+            </ul>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
