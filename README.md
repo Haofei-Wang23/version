@@ -81,6 +81,3 @@ npm run dev
 npm run build
 ```
 
----
-
-> This project is a CPT208 Studio Project —— "Designing Playful Experiences · Human-Centric Computing"
