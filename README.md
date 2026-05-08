@@ -83,6 +83,4 @@ npm run build
 
 ---
 
-> 本项目为 CPT208 Studio Project —— "Designing Playful Experiences · Human-Centric Computing"
->
 > This project is a CPT208 Studio Project —— "Designing Playful Experiences · Human-Centric Computing"
