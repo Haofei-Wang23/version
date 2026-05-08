@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { ArrowLeft, CheckCircle2, MapPin, Navigation, RotateCcw, Route, X } from 'lucide-react';
 import { useLanguage } from './LanguageProvider';
 
-const mapImageSrc = '/dt.png?v=20260505-2005';
+const mapImageSrc = './dt.png?v=20260505-2005';
 
 const routePath =
   'M 660 828 C 654 772, 648 724, 642 690 C 710 672, 814 682, 884 724 C 888 612, 884 456, 880 318 C 800 314, 728 332, 672 370 C 606 414, 578 356, 560 274 C 546 204, 534 118, 530 56';
